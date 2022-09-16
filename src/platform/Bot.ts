@@ -1,0 +1,3 @@
+interface Bot{
+    run():void;
+}
