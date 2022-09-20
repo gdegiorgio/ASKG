@@ -4,6 +4,8 @@ export class TelegramBot implements Bot{
 
 
     private telegramBot:Telegraf
+    nlp_processor:NLPProcessor
+    intent_recognizer: IntentRecognizer;
 
     constructor(){
         this.telegramBot = new Telegraf(process.env.TELEGRAM_TOKEN)

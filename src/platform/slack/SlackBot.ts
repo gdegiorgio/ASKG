@@ -4,8 +4,9 @@ import { Botkit, BotkitHandler, BotkitMessage, BotWorker } from "botkit";
 export class SlackBot implements Bot{
 
     private slackBot:Botkit
+    nlp_processor:NLPProcessor
+    intent_recognizer: IntentRecognizer;
     
-
     constructor(){
     }
 

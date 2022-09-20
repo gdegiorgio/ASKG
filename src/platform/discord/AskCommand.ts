@@ -10,4 +10,5 @@ export const ask:Command = {
                 run : async(interaction) => {
                     interaction.reply("Bot under development")
     }
+
 }
