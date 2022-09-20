@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { QAnswerProcessor } from './nlp/processor/QAnswerProcessor';
 import { ArgsHandler } from './platform/utils/ArgsHandler';
 
 

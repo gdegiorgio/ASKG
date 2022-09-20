@@ -1,0 +1,40 @@
+{
+  "name": "Test corpus",
+  "locale": "en-US",
+  "data": [
+    {
+      "intent": "abstract",
+      "utterances": [
+        "Who is %entity%",
+        "Give me information about %entity%",
+        "Who was %entity%",
+        "Give me a description of %entity%"
+      ]
+    },
+    {
+        "intent": "image",
+        "utterances": [
+          "Can I have an image of %entity%",
+          "Give me a pic of %entity%",
+          "Give me image of %entity%",
+          "Show me a pic of %entity%",
+          "I wanna see a %entity%"
+        ]
+      },
+      {
+        "intent": "birthPlace",
+        "utterances": [
+          "Where was %entity% born?",
+          "Place where %entity% born"
+        ]
+      },
+      {
+        "intent": "deathPlace",
+        "utterances": [
+          "Where did %entity% die?",
+          "Place where %entity% die"
+        ]
+      }
+      
+]
+}

@@ -4,8 +4,9 @@ import { CommandList } from "./CommandList";
 export class DiscordBot implements Bot{
 
     private discordClient:Client
-
-
+    nlp_processor:NLPProcessor
+    intent_recognizer: IntentRecognizer;
+    
     constructor(){
         this.discordClient = new Client({intents: ["Guilds"]});
     }
