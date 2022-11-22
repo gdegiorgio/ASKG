@@ -1,8 +1,14 @@
+import { DbpediaEndpoint } from "../../kg/dbpedia/DBpediaEndpoint";
+import { KGBroker } from "../../kg/KGBroker";
+import { QAnswerEndpoint } from "../../kg/qanswer/QAnswerEndpoint";
+import { WikidataEndpoint } from "../../kg/wikidata/WikidataEndpoint";
 import { NLPjsIntentRecognizer } from "../../nlp/intent/NLPjsIntentRecognizer";
 import { QAnswerProcessor } from "../../nlp/processor/QAnswerProcessor";
+import { Bot } from "../Bot";
 import { DiscordBot } from "../discord/DiscordBot";
 import { SlackBot } from "../slack/SlackBot";
 import { TelegramBot } from "../telegram/TelegramBot";
+
 
 export class ArgsHandler{
 
@@ -17,7 +23,10 @@ export class ArgsHandler{
         let bots:Bot[] = []
         let processor:NLPProcessor;
         let intentRecognizer:IntentRecognizer;
+        let broker:KGBroker 
+        let endpoints:SparqlEndpoint[] = []
 
+        console.log(args)
 
         if(args.includes("-telegram")){
             platformCount++;
@@ -40,16 +49,27 @@ export class ArgsHandler{
         if(args.includes("-dbpedia")){
             knowledgeBases.push("dbpedia")
             knowledgeBaseCount++;
+            endpoints.push(new DbpediaEndpoint())
+            
+
         }
         if(args.includes("-wikidata")){
             knowledgeBases.push("wikidata")
             knowledgeBaseCount++;
+            endpoints.push(new WikidataEndpoint())
         }
         if(args.includes("-qanswer_dbpedia")){
             knowledgeBaseCount++;
+            let qanswer_endpoint:QAnswerEndpoint = new QAnswerEndpoint()
+            qanswer_endpoint.knowledge_base="dbpedia";
+            endpoints.push(qanswer_endpoint)
+
         }
         if(args.includes("-qanswer_wikidata")){
             knowledgeBaseCount++;
+            let qanswer_endpoint:QAnswerEndpoint = new QAnswerEndpoint()
+            qanswer_endpoint.knowledge_base="wikidata";
+            endpoints.push(qanswer_endpoint)
         }
         if(args.includes("-qanswer")){
             processorSelected=true;
@@ -69,12 +89,12 @@ export class ArgsHandler{
             return;
         }
         if(!processorSelected){
-            console.error("You need to specify at least one platform")
+            console.error("You need to specify at least one processor")
             this.printHandler();
             return;
         }
         if(!knowledgeBaseCount){
-            console.error("You need to specify at least one platform")
+            console.error("You need to specify at least one knowledge base")
             this.printHandler();
             return;
         }
@@ -84,7 +104,9 @@ export class ArgsHandler{
             return;
         }
 
-        this.runBots(bots, processor, intentRecognizer);
+
+        broker = new KGBroker(endpoints)
+        this.runBots(bots, processor, intentRecognizer,broker);
     }
 
 
@@ -121,8 +143,9 @@ export class ArgsHandler{
         console.log(helpMsg)
     }
 
-    private runBots(bots:Bot[], processor:NLPProcessor, intentRecognizer:IntentRecognizer){
+    private runBots(bots:Bot[], processor:NLPProcessor, intentRecognizer:IntentRecognizer, broker:KGBroker){
         for(let bot of bots){
+            bot.kg_broker=broker;
             bot.nlp_processor=processor;
             bot.intent_recognizer=intentRecognizer;
             bot.run();
