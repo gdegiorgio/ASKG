@@ -13,13 +13,10 @@ export class QAnswerProcessor implements NLPProcessor{
 
     async process(question:string):Promise<any>{
         return new Promise(async (resolve) => {
-            console.log("Question : ", question)
-            this.getToken().then((token) => {
-                this.getSPARQLQueries(question, token).then(data => {
-                    console.log("Sparql data : ", data)
-                    resolve(data);
-                });
-            })
+
+            let token = await this.getToken()
+            let result_query = this.getSPARQLQueries(question,token)
+            resolve(result_query)
         })
 
     }
@@ -45,7 +42,6 @@ export class QAnswerProcessor implements NLPProcessor{
 
     private async getSPARQLQueries(question:string, token:String){
         return new Promise(async (resolve) => {
-
             let data : object[] = []
             for(let knowledgeBase of this.knowledgeBases){
                 let config = {
@@ -61,10 +57,8 @@ export class QAnswerProcessor implements NLPProcessor{
                     }
             }
                 let url = knowledgeBase.toUpperCase().includes("DBPEDIA") || knowledgeBase.toUpperCase().includes("WIKIDATA") ? this.queryURL_DBPEDIA_WIKIDATA: this.queryURL
-                axios.get(url,config).then((response) => {
-                    data.push(response.data.queries[0].query)
-                    console.log("Data :" , data)
-                }) 
+                let response = await axios.get(url,config)
+                data.push({knowledgeBase:knowledgeBase, sparql: response.data.queries[0].query})
             }
             resolve(data);
         })

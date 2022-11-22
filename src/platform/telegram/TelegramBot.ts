@@ -34,9 +34,14 @@ export class TelegramBot implements Bot{
             context.reply(this.getHelpText())
             return
         }
-        this.nlp_processor.process(splitCmd[1]).then((sparql_queries) => {
-            console.log("Process result  : "  + JSON.stringify(sparql_queries, null, 4))
-        })
+
+        let query = await this.nlp_processor.process(splitCmd[1])
+        /*this.nlp_processor.process(splitCmd[1]).then((sparql_query) => {
+            console.log("Process result  : "  + JSON.stringify(sparql_query, null, 4))
+        })*/
+
+
+        console.log("Solved sparql query : " , query)
 
         //let responses:EndpointResponse[] = await this.kg_broker.runQuery(sparql)
     }
