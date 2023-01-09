@@ -1,17 +1,17 @@
-
-import { WikidataResponse } from "./WikidataResponse";
+import ArcoResponse from "./ArcoResponse"
+import localStorage from 'localStorage'
 import SparqlClient from "sparql-http-client";
 
-export class WikidataEndpoint implements SparqlEndpoint{
+export default class ArcoEndpoint implements SparqlEndpoint{
     runQuery(sparql_query: string): Promise<EndpointResponse> {
-        return new Promise(async(resolve)=>{
-            var url = 'https://query.wikidata.org/sparql' 
-            let response: WikidataResponse = new WikidataResponse();
+        return new Promise(async (resolve) => {
+            var url = "https://dbpedia.org/sparql/"
+            let response: ArcoResponse = new ArcoResponse();
             response.data = {}
 
 
 
-            let mock_query = 'SELECT ?concept WHERE { ?concept rdfs:label "Alan Turing"@en}'
+            let mock_query = 'SELECT ?x WHERE { ?x rdfs:label "Product Family" . }'
             let client = new SparqlClient({ endpointUrl: url });
             let dataStream = await client.query.select(mock_query);
             let res_arr = []

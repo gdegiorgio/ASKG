@@ -20,6 +20,7 @@
     "botkit": "^4.15.0",
     "discord.js": "^14.3.0",
     "dotenv": "^16.0.2",
+    "localStorage": "^1.0.4",
     "node-nlp": "^4.24.0",
     "request": "^2.88.2",
     "sparql-http-client": "^2.4.1",

@@ -1,5 +1,6 @@
 import { DbpediaEndpoint } from "../../kg/dbpedia/DBpediaEndpoint";
 import { KGBroker } from "../../kg/KGBroker";
+import ArcoEndpoint from "../../kg/arco/ArcoEndpoint";
 import { QAnswerEndpoint } from "../../kg/qanswer/QAnswerEndpoint";
 import { WikidataEndpoint } from "../../kg/wikidata/WikidataEndpoint";
 import { NLPjsIntentRecognizer } from "../../nlp/intent/NLPjsIntentRecognizer";
@@ -8,6 +9,7 @@ import { Bot } from "../Bot";
 import { DiscordBot } from "../discord/DiscordBot";
 import { SlackBot } from "../slack/SlackBot";
 import { TelegramBot } from "../telegram/TelegramBot";
+import EuropeanaEndpoint from "../../kg/europeana/EuropeanaEndpoint";
 
 
 export class ArgsHandler{
@@ -53,6 +55,21 @@ export class ArgsHandler{
             
 
         }
+
+
+        if(args.includes("-arco")){
+            knowledgeBases.push("arco")
+            knowledgeBaseCount++;
+            endpoints.push(new ArcoEndpoint())
+        }
+
+
+        if(args.includes("-europeana")){
+            knowledgeBases.push("europeana")
+            knowledgeBaseCount++;
+            endpoints.push(new EuropeanaEndpoint())
+        }
+
         if(args.includes("-wikidata")){
             knowledgeBases.push("wikidata")
             knowledgeBaseCount++;
@@ -88,11 +105,11 @@ export class ArgsHandler{
             this.printHandler();
             return;
         }
-        if(!processorSelected){
+        /*if(!processorSelected){
             console.error("You need to specify at least one processor")
             this.printHandler();
             return;
-        }
+        }*/
         if(!knowledgeBaseCount){
             console.error("You need to specify at least one knowledge base")
             this.printHandler();

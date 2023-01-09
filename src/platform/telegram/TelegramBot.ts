@@ -1,7 +1,7 @@
 import { Context, Telegraf } from "telegraf";
 import { KGBroker } from "../../kg/KGBroker";
 import { Bot } from "../Bot";
-
+import localStorage from 'localStorage'
 export class TelegramBot implements Bot{
 
 
@@ -35,15 +35,22 @@ export class TelegramBot implements Bot{
             return
         }
 
-        let query = await this.nlp_processor.process(splitCmd[1])
-        /*this.nlp_processor.process(splitCmd[1]).then((sparql_query) => {
-            console.log("Process result  : "  + JSON.stringify(sparql_query, null, 4))
-        })*/
 
 
-        console.log("Solved sparql query : " , query)
+        localStorage.setItem("user_query", splitCmd[1])
 
-        //let responses:EndpointResponse[] = await this.kg_broker.runQuery(sparql)
+
+        let query = []
+        if(this.nlp_processor !== undefined )
+            query = await this.nlp_processor.process(splitCmd[1])
+        else
+            query = [splitCmd[1]]
+
+
+        
+
+        let responses:EndpointResponse[] = await this.kg_broker.runQuery("")
+        console.log("Endpoint Responses : " , JSON.stringify(responses, null, 4))
     }
 
     private onStart(context:Context){

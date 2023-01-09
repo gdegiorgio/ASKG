@@ -17,6 +17,20 @@
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ]
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program All Endpoints",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "args": ["-telegram"  ,  "-dbpedia",  "-wikidata",  "-arco", "-europeana", "-nlpjs"],
+            "program": "${workspaceFolder}/src/app.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js"
+            ]
         }
     ]
 }
