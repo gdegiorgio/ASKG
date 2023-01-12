@@ -1,5 +1,5 @@
 export class QAnswerResponse implements EndpointResponse{
     knowledgeBase:string
-    sparql_endpoint = "QAnswer"
+    endpoint = "QAnswer"
     data:Object
 }

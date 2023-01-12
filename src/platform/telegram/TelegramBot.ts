@@ -49,8 +49,8 @@ export class TelegramBot implements Bot{
 
         
 
-        let responses:EndpointResponse[] = await this.kg_broker.runQuery("")
-        console.log("Endpoint Responses : " , JSON.stringify(responses, null, 4))
+        let res:string = await this.kg_broker.runQuery("")
+        context.reply(res)
     }
 
     private onStart(context:Context){

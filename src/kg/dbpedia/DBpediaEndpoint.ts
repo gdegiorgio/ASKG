@@ -22,7 +22,7 @@ export class DbpediaEndpoint implements SparqlEndpoint {
                 console.log(data)
             })
             dataStream.on("end", () => {
-                response.data = { "results  ": res_arr }
+                response.data = { "results": res_arr }
                 resolve(response)
             })
 

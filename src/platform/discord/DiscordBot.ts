@@ -17,7 +17,8 @@ export class DiscordBot implements Bot{
     public async run(){
 
         this.discordClient.on("ready", () => {this.onClientReady()})
-        this.discordClient.on("interactionCreate", (interaction:Interaction) => { this.onInteractionCreated(interaction)})
+        let broker = this.kg_broker
+        this.discordClient.on("interactionCreate", (interaction:any) => { interaction.broker = broker, this.onInteractionCreated(interaction)})
         await this.discordClient.login(process.env.DISCORD_TOKEN);
 
     }

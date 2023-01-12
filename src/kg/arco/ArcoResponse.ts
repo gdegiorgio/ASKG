@@ -1,4 +1,4 @@
 export default class ArcoResponse implements EndpointResponse{
-    sparql_endpoint: string;
+    endpoint: string = "ArCo";
     data : object;
 }

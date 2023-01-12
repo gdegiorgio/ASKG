@@ -1,5 +1,5 @@
 export class DBpediaResponse implements EndpointResponse{
 
-    sparql_endpoint = "DBpedia"
+    endpoint = "DBpedia"
     data:Object
 }

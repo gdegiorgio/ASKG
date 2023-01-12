@@ -1,5 +1,5 @@
 export class WikidataResponse implements EndpointResponse{
-    sparql_endpoint = "Wikidata"
+    endpoint = "Wikidata"
     data:Object
 
 }

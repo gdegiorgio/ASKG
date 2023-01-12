@@ -10,6 +10,7 @@ import { DiscordBot } from "../discord/DiscordBot";
 import { SlackBot } from "../slack/SlackBot";
 import { TelegramBot } from "../telegram/TelegramBot";
 import EuropeanaEndpoint from "../../kg/europeana/EuropeanaEndpoint";
+import localStorage from 'localStorage'
 
 
 export class ArgsHandler{

@@ -1,4 +1,4 @@
 interface EndpointResponse{
-    sparql_endpoint:string
-    data:Object
+    endpoint:string
+    data:any
 }

@@ -1,4 +1,4 @@
 export default class EuropeanaResponse implements EndpointResponse{
-    sparql_endpoint: string;
+    endpoint: string;
     data : object;
 }

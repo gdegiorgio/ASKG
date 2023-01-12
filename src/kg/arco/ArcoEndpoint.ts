@@ -11,7 +11,7 @@ export default class ArcoEndpoint implements SparqlEndpoint{
 
 
 
-            let mock_query = 'SELECT ?x WHERE { ?x rdfs:label "Product Family" . }'
+            let mock_query = 'SELECT ?concept WHERE { ?concept rdfs:label "Product Family" . }'
             let client = new SparqlClient({ endpointUrl: url });
             let dataStream = await client.query.select(mock_query);
             let res_arr = []
@@ -20,7 +20,7 @@ export default class ArcoEndpoint implements SparqlEndpoint{
                 console.log(data)
             })
             dataStream.on("end", () => {
-                response.data = { "results": res_arr }
+                response.data = {"results": res_arr }
                 resolve(response)
             })
 
