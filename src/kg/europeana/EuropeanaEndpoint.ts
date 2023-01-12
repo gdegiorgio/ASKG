@@ -1,31 +1,41 @@
 import EuropeanaResponse from "./EuropeanaResponse"
 import localStorage from 'localStorage'
 import SparqlClient from "sparql-http-client";
-
+import axios
+ from "axios";
 export default class EuropeanaEndpoint implements SparqlEndpoint{
     runQuery(sparql_query: string): Promise<EndpointResponse> {
         return new Promise(async(resolve)=>{
-            var url = 'http://sparql.europeana.eu/' 
             let response: EuropeanaResponse = new EuropeanaResponse();
             response.data = {}
+            response.endpoint = "Europeana"
 
 
-
-            let mock_query =   `
-            PREFIX edm: <http://www.europeana.eu/schemas/edm/>
-            SELECT ?DataProvider
-            WHERE { ?Aggregation edm:dataProvider ?DataProvider }
+            //curl -X GET --header 'Accept: application/json' 'https://api.europeana.eu/record/v2/search.json?profile=standard&query=alan%20turing&rows=12&start=1&wskey=<KEY>'
+            var url = 'https://api.europeana.eu/record/v2/search.json'
+            let config = {
+                headers: {
+                    "Accept" : "application/json"
+                },
+                params: {
+                    profile : "standard",
+                    query : "Alan Turing Photo",
+                    rows : 12,
+                    start : 1,
+                    wskey : "kideckell"
+                }
+            }
+            console.log("Calling Europeana")
+            axios.get(url, config).then((responses:any) => {
             
-                `
-            let client = new SparqlClient({ endpointUrl: url });
-            let dataStream = await client.query.select(mock_query);
-            let res_arr = []
-            dataStream.on("data", (data: any) => {
-                res_arr.push(data)
-                console.log(data)
-            })
-            dataStream.on("end", () => {
-                response.data = { "results": res_arr }
+                let items = []
+                console.log(responses)
+                for(const res of responses.data.items){
+                    items.push({concept: {
+                        value: res.guid
+                    }})
+                }
+                response.data = {results: items}
                 resolve(response)
             })
 
