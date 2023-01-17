@@ -14,6 +14,7 @@ export const ask:Command = {
                     console.log(JSON.stringify(localStorage))
                     let broker = interaction.broker
                     let res:string = await broker.runQuery("")
+                    console.log("Sending back response")
                     interaction.reply(res)
     }
 

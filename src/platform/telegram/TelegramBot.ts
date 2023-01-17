@@ -14,13 +14,13 @@ export class TelegramBot implements Bot{
         this.telegramBot = new Telegraf(process.env.TELEGRAM_TOKEN)
     }
 
-    public run(): void {
+    public async run() {
         
         
         this.telegramBot.command("/start", async(ctx:Context)=>{this.onStart(ctx)})
         this.telegramBot.command("/ask", async(ctx:Context)=>{this.onAsk(ctx)})
         console.log("Starting telegram bot...")
-        this.telegramBot.launch();
+        await this.telegramBot.launch();
 
 
     }
@@ -28,6 +28,7 @@ export class TelegramBot implements Bot{
 
     // Context type doesn't compile
     private async onAsk(context:any){
+        console.log("onASK")
         let message = context.message
         let splitCmd:string[]= message.text.split("/ask")
         if (splitCmd.length != 2){
@@ -49,6 +50,8 @@ export class TelegramBot implements Bot{
 
         
 
+
+        console.log("Broker start")
         let res:string = await this.kg_broker.runQuery("")
         context.reply(res)
     }

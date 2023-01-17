@@ -13,7 +13,13 @@ export class DbpediaEndpoint implements SparqlEndpoint {
 
 
 
-            let mock_query = 'SELECT ?concept WHERE { ?concept rdfs:label "Alan Turing"@en}'
+            let mock_query = `SELECT ?concept ?birthdate WHERE {
+
+                ?concept rdfs:label "Elizabeth II"@en . 
+                ?concept dbp:birthDate ?birthdate .
+               
+               }`
+            console.log("Generated Dbpedia Query :" , mock_query)
             let client = new SparqlClient({ endpointUrl: url });
             let dataStream = await client.query.select(mock_query);
             let res_arr = []

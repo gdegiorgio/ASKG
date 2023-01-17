@@ -5,13 +5,24 @@ import SparqlClient from "sparql-http-client";
 export default class ArcoEndpoint implements SparqlEndpoint{
     runQuery(sparql_query: string): Promise<EndpointResponse> {
         return new Promise(async (resolve) => {
-            var url = "https://dbpedia.org/sparql/"
+            var url = "https://dati.cultura.gov.it/sparql"
             let response: ArcoResponse = new ArcoResponse();
             response.data = {}
 
 
 
-            let mock_query = 'SELECT ?concept WHERE { ?concept rdfs:label "Product Family" . }'
+            let mock_query = `PREFIX dc:<http://purl.org/dc/elements/1.1/>
+            PREFIX arco:<https://w3id.org/arco/ontology/arco/>
+            SELECT ?concept ?label where {
+            
+               ?concept rdf:type arco:HistoricOrArtisticProperty .
+               ?concept rdfs:label ?label .
+               ?concept dc:coverage "Caserta (CE)" . 
+            
+            } LIMIT 10`
+
+            
+            console.log("Generated Arco Query :" , mock_query)
             let client = new SparqlClient({ endpointUrl: url });
             let dataStream = await client.query.select(mock_query);
             let res_arr = []

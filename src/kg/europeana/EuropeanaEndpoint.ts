@@ -25,7 +25,6 @@ export default class EuropeanaEndpoint implements SparqlEndpoint{
                     wskey : "kideckell"
                 }
             }
-            console.log("Calling Europeana")
             axios.get(url, config).then((responses:any) => {
             
                 let items = []

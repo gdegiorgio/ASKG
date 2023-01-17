@@ -13,7 +13,7 @@ export default class ResponseFormatter{
             if(response.endpoint != undefined && response.data != new Object()){
                 res_body += "Found some info on " + response.endpoint + ":\n\n" 
                 for(const result of response.data.results){
-                        res_body+=result.concept.value+"\n\n"
+                        res_body+=result.birthdate.value+"\n\n"
                 }
             }
         }
