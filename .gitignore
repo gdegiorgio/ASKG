@@ -7,7 +7,9 @@ lib-cov
 *.pid
 *.gz
 *.swp
-
+package-lock.json
+*.properties
+*.config
 pids
 logs
 results
@@ -39,4 +41,5 @@ dist/**/*
 
 # ignore yarn.lock
 yarn.lock
+package-lock.json
 
