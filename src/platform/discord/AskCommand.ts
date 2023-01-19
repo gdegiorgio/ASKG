@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { KGBroker } from "../../kg/KGBroker";
 import { Command } from "./Command";
-
 import localStorage from 'localStorage'
 
 export const ask:Command = {
@@ -11,6 +10,8 @@ export const ask:Command = {
             
                 run : async(interaction:any) => {
                     let message = interaction.options.get("message").value
+                    localStorage.setItem("user_query", message)
+
                     console.log(JSON.stringify(localStorage))
                     let broker = interaction.broker
                     let res:string = await broker.runQuery("")

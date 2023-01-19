@@ -9,9 +9,9 @@ export default class EuropeanaEndpoint implements SparqlEndpoint{
             let response: EuropeanaResponse = new EuropeanaResponse();
             response.data = {}
             response.endpoint = "Europeana"
+            let query = localStorage.getItem("user_query")
 
 
-            //curl -X GET --header 'Accept: application/json' 'https://api.europeana.eu/record/v2/search.json?profile=standard&query=alan%20turing&rows=12&start=1&wskey=<KEY>'
             var url = 'https://api.europeana.eu/record/v2/search.json'
             let config = {
                 headers: {
@@ -19,7 +19,7 @@ export default class EuropeanaEndpoint implements SparqlEndpoint{
                 },
                 params: {
                     profile : "standard",
-                    query : "Alan Turing Photo",
+                    query : query, 
                     rows : 12,
                     start : 1,
                     wskey : "kideckell"
