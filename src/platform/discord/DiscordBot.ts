@@ -1,4 +1,6 @@
 import { Client, Interaction, REST, Routes } from "discord.js";
+import { KGBroker } from "../../kg/KGBroker";
+import { Bot } from "../Bot";
 import { CommandList } from "./CommandList";
 
 export class DiscordBot implements Bot{
@@ -6,7 +8,8 @@ export class DiscordBot implements Bot{
     private discordClient:Client
     nlp_processor:NLPProcessor
     intent_recognizer: IntentRecognizer;
-    
+    kg_broker:KGBroker
+
     constructor(){
         this.discordClient = new Client({intents: ["Guilds"]});
     }
@@ -14,7 +17,8 @@ export class DiscordBot implements Bot{
     public async run(){
 
         this.discordClient.on("ready", () => {this.onClientReady()})
-        this.discordClient.on("interactionCreate", (interaction:Interaction) => { this.onInteractionCreated(interaction)})
+        let broker = this.kg_broker
+        this.discordClient.on("interactionCreate", (interaction:any) => { interaction.broker = broker, this.onInteractionCreated(interaction)})
         await this.discordClient.login(process.env.DISCORD_TOKEN);
 
     }
@@ -39,7 +43,7 @@ export class DiscordBot implements Bot{
     private async onInteractionCreated(interaction:Interaction){
         if (interaction.isCommand()) {
             for (const Command of CommandList) {
-              if (interaction.commandName === Command.data.name) {
+              if (interaction.commandName === Command.data.name) { 
                 await Command.run(interaction);
                 break;
               }

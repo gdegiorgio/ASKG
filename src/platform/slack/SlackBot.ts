@@ -1,12 +1,15 @@
 import { SlackAdapter } from "botbuilder-adapter-slack";
 import { Botkit, BotkitHandler, BotkitMessage, BotWorker } from "botkit";
+import { KGBroker } from "../../kg/KGBroker";
+import { Bot } from "../Bot";
 
 export class SlackBot implements Bot{
 
     private slackBot:Botkit
     nlp_processor:NLPProcessor
     intent_recognizer: IntentRecognizer;
-    
+    kg_broker:KGBroker
+
     constructor(){
     }
 
